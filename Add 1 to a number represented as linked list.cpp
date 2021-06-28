@@ -1,55 +1,43 @@
-/* 
-
-struct Node
-{
-    int data;
-    struct Node* next;
-    
-    Node(int x){
-        data = x;
-        next = NULL;
-    }
-};
-
-*/
-
 class Solution
 {
     public:
-    
-    Node* reverseList(Node* head)
-    {
-        Node* p=nullptr;
-        Node* q=head;
-        Node* r=head->next;
-        while(q!=nullptr)
-        {
-            q->next=p;
-            p=q;
-            q=r;
-            if(r!=nullptr)
-                r=r->next;
-        }
-        return p;
-    }
     Node* addOne(Node *head) 
     {
-        Node* revHead=reverseList(head);
-        Node* temp=revHead;
-        Node* prev=nullptr;
-        while(temp!=nullptr && temp->data==9)
+        Node* dummy=new Node(INT_MIN);
+        Node* it=dummy;
+        dummy->next=head;
+        Node* prv=dummy;
+        while(it)
         {
-            temp->data=0;
-            prev=temp;
-            temp=temp->next;
+            if(it->data!=9)
+                prv=it;
+            it=it->next;
         }
-        if(temp==nullptr)
+        
+        if(prv==dummy)
         {
-            Node* nd=new Node(1);
-            prev->next=nd;
+            dummy->data=1;
+            dummy=dummy->next;
+            while(dummy)
+            {
+                dummy->data=0;
+                dummy=dummy->next;
+            }
+            return prv;
         }
+        
+        if(prv->next==nullptr)
+            prv->data+=1;
         else
-            temp->data+=1;
-        return reverseList(revHead);
+        {
+            prv->data+=1;
+            prv=prv->next;
+            while(prv)
+            {
+                prv->data=0;
+                prv=prv->next;
+            }
+        }
+        return head;
     }
 };
