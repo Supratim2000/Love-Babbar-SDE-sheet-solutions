@@ -2,9 +2,7 @@ class Solution {
   public:
     void toSumTree(Node *node)
     {
-        if(!node)
-            return;
-        else if(node->left==nullptr && node->right==nullptr)
+        if(node->left==nullptr && node->right==nullptr)
             node->data=0;
         else
         {
