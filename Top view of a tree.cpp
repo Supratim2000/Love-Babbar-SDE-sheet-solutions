@@ -18,13 +18,9 @@ class Solution
             levelNode.insert({curNode.second,curNode.first->data});
             q.pop();
             if(curNode.first->left)
-            {
                 q.push({curNode.first->left,curNode.second-1});
-            }
             if(curNode.first->right)
-            {
                 q.push({curNode.first->right,curNode.second+1});
-            }
         }
         for(auto it=levelNode.begin();it!=levelNode.end();it++)
             ans.push_back(it->second);
