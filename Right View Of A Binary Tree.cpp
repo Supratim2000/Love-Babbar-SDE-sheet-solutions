@@ -1,44 +1,33 @@
+//Method 1(BFS)
 class Solution
 {
     public:
     //Function to return list containing elements of right view of binary tree.
     vector<int> rightView(Node *root)
     {
-        vector<int> rightView;
+        vector<int> view;
         if(root==nullptr)
-            return rightView;
-        queue<Node*> pendingNodes;
-        pendingNodes.push(root);
-        rightView.push_back(root->data);
-        while(!pendingNodes.empty())
+            return view;
+        queue<Node*> q;
+        q.push(root);
+        while(!q.empty())
         {
-            bool flag=true;
-            int n=pendingNodes.size();
+            int n=q.size();
             for(int i=0;i<n;i++)
             {
-                Node* curNode=pendingNodes.front();
-                pendingNodes.pop();
-                if(curNode->right!=nullptr)
-                {
-                    if(flag)
-                    {
-                        rightView.push_back(curNode->right->data);
-                        flag=false;
-                    }
-                    pendingNodes.push(curNode->right);
-                }
-                if(curNode->left!=nullptr)
-                {
-                    if(flag)
-                    {
-                        rightView.push_back(curNode->left->data);
-                        flag=false;
-                    }
-                    pendingNodes.push(curNode->left);
-                }
+                Node* curNode=q.front();
+                q.pop();
+                if(i==n-1)
+                    view.push_back(curNode->data);
+                if(curNode->left)
+                    q.push(curNode->left);
+                if(curNode->right)
+                    q.push(curNode->right);
             }
-            flag=true;
         }
-        return rightView;
+        return view;
     }
 };
+
+//Method 1(DFS)
+
