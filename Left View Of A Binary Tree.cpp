@@ -4,7 +4,6 @@ vector<int> leftView(Node *root)
     vector<int> view;
     if(root==nullptr)
         return view;
-    int flag=true;
     queue<Node*> q;
     q.push(root);
     while(!q.empty())
@@ -14,21 +13,16 @@ vector<int> leftView(Node *root)
         {
             Node* curNode=q.front();
             q.pop();
-            if(flag)
-            {
+            if(i==0)
                 view.push_back(curNode->data);
-                flag=false;
-            }
             if(curNode->left)
                 q.push(curNode->left);
             if(curNode->right)
                 q.push(curNode->right);
         }
-        flag=true;
     }
     return view;
 }
-
 //Method 2(DFS)
 void traverse(Node *root,int height,int& maxHeightTillNow,vector<int>& view)
 {
