@@ -1,6 +1,11 @@
-class Solution {
-  public:
-    vector <int> bottomView(Node *root) {
+//Method 1(BFS)
+class Solution
+{
+    public:
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    vector<int> bottomView(Node *root)
+    {
         vector<int> ans;
         map<int,int> levelNode;
         if(!root)
