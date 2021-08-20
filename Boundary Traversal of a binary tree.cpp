@@ -1,70 +1,63 @@
 class Solution {
 public:
-    void addLeft(Node* root, vector<int>& ans)
+    bool isLeaf(Node *root)
+    {
+        return root->left==nullptr && root->right==nullptr;
+    }
+
+    void addLeftBoundary(Node *root,vector<int>& ans)
     {
         if(root==nullptr)
             return;
+        if(!isLeaf(root))
+            ans.push_back(root->data);
         if(root->left)
-        {
-            ans.push_back(root->data);
-            addLeft(root->left,ans);
-        }
+            addLeftBoundary(root->left,ans);
         else if(root->right)
-        {
-            ans.push_back(root->data);
-            addLeft(root->right,ans);
-        }
+            addLeftBoundary(root->right,ans);
     }
     
-    void addLeaf(Node* root,vector<int>& ans)
-    {
-        if(root==nullptr)
-            return;
-        addLeaf(root->left,ans);
-        if(root->left==nullptr && root->right==nullptr)
-            ans.push_back(root->data);
-        addLeaf(root->right,ans);
-    }
-    
-    void addRight(Node* root, vector<int>& ans)
+    void addRightBoundary(Node *root,Node* mainRoot,vector<int>& ans)
     {
         if(root==nullptr)
             return;
         if(root->right)
-        {
-            addRight(root->right,ans);
-            ans.push_back(root->data);
-        }
+            addRightBoundary(root->right,mainRoot,ans);
         else if(root->left)
-        {
-            addRight(root->left,ans);
+            addRightBoundary(root->left,mainRoot,ans);
+        if(!isLeaf(root) && root!=mainRoot)
             ans.push_back(root->data);
-        }
     }
-
+    
+    void addLeaves(Node* root,vector<int>& ans)
+    {
+        if(root==nullptr)
+            return;
+        if(isLeaf(root))
+            ans.push_back(root->data);
+        addLeaves(root->left,ans);
+        addLeaves(root->right,ans);
+    }
+    
     vector <int> printBoundary(Node *root)
     {
         vector<int> ans;
-        if(root->left==nullptr && root->right==nullptr)
-            ans.push_back(root->data);
-        else if(root->left==nullptr)
+        if(root->left && root->right)
         {
-            ans.push_back(root->data);
-            addLeaf(root,ans);
-            addRight(root,ans);
-            ans.pop_back();
+            addLeftBoundary(root,ans);
+            addLeaves(root,ans);
+            addRightBoundary(root,root,ans);
         }
-        else if(root->right==nullptr)
+        else if(root->left)
         {
-            addLeft(root,ans);
-            addLeaf(root,ans);
+            addLeftBoundary(root,ans);
+            addLeaves(root,ans);
         }
         else
         {
-            addLeft(root,ans);
-            addLeaf(root,ans);
-            addRight(root,ans);
-            ans.pop_back();
+            ans.push_back(root->data);
+            addLeaves(root,ans);
+            addRightBoundary(root,root,ans);
         }
         return ans;
     }
