@@ -1,4 +1,4 @@
-//Method 1
+//Method 1(Using Queue and Iteration)
 //---------------------------------------------------------------------------------------------------
 void diagonalLevelTraversal(Node* root,vector<int>& ans)
 {
@@ -29,30 +29,26 @@ vector<int> diagonal(Node *root)
 }
 //---------------------------------------------------------------------------------------------------
 
-//Method 2
+//Method 2(Using Map and Recursion)
 //---------------------------------------------------------------------------------------------------
-void preOrder(Node* root,map<int,vector<int>>& dLevel,vector<int>& ans,int level)
+void traverse(Node* root,int leftSpreadLevel,map<int,vector<int>>& diagonalLevel)
 {
-    if(root==nullptr)
+    if(!root)
         return;
-    dLevel[level].push_back(root->data);
-    preOrder(root->left,dLevel,ans,level+1);
-    preOrder(root->right,dLevel,ans,level);
+    diagonalLevel[leftSpreadLevel].push_back(root->data);
+    traverse(root->left,leftSpreadLevel+1,diagonalLevel);
+    traverse(root->right,leftSpreadLevel,diagonalLevel);
 }
 
 vector<int> diagonal(Node *root)
 {
     vector<int> ans;
-    map<int,vector<int>> dLevel;
-    if(root==nullptr)
-        return ans;
-    preOrder(root,dLevel,ans,0);
-    for (auto x :dLevel)
-    {
-        vector<int> curVector=x.second;
-        for(auto y:curVector)
-          ans.push_back(y);
-    }
+    int leftSpreadLevel=0;
+    map<int,vector<int>> diagonalLevel;
+    traverse(root,leftSpreadLevel,diagonalLevel);
+    for(auto x: diagonalLevel)
+        for(auto y: x.second)
+            ans.push_back(y);
     return ans;
 }
 //---------------------------------------------------------------------------------------------------
