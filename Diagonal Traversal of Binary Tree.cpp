@@ -1,7 +1,10 @@
 //Method 1(Using Queue and Iteration)
 //---------------------------------------------------------------------------------------------------
-void diagonalLevelTraversal(Node* root,vector<int>& ans)
+vector<int> diagonal(Node *root)
 {
+    vector<int> ans;
+    if(root==nullptr)
+        return ans;
     queue<Node*> q;
     q.push(root);
     while(!q.empty())
@@ -16,16 +19,7 @@ void diagonalLevelTraversal(Node* root,vector<int>& ans)
             curNode=curNode->right;
         }
     }
-}
-
-vector<int> diagonal(Node *root)
-{
-    vector<int> ans;
-    if(root==nullptr)
-        return ans;
-    diagonalLevelTraversal(root,ans);
     return ans;
-   
 }
 //---------------------------------------------------------------------------------------------------
 
