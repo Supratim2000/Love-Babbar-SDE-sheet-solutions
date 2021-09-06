@@ -8,8 +8,12 @@ class Solution{
         else if(!root1 || !root2)
             return false;
         bool isRootValSame=root1->data==root2->data;
+        if(!isRootValSame)
+            return false;
         bool isoFirst=isIsomorphic(root1->left,root2->left) && isIsomorphic(root1->right,root2->right);
+        if(isRootValSame && isoFirst)
+            return true;
         bool isoSecond=isIsomorphic(root1->left,root2->right) && isIsomorphic(root1->right,root2->left);
-        return isRootValSame && (isoFirst || isoSecond);
+        return isRootValSame && isoSecond;
     }
 };
