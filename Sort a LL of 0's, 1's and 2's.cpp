@@ -1,3 +1,35 @@
+//Brute force approach
+//Time Complexity:- O(N)(Double Pass)
+//Space Complexity:- O(1)
+class Solution
+{
+    public:
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+        unordered_map<int,int> freq;
+        Node* t=head;
+        while(t)
+        {
+            freq[t->data]++;
+            t=t->next;
+        }
+        t=head;
+        for(int i=0;i<3;i++)
+        {
+            while(freq[i]--)
+            {
+                t->data=i;
+                t=t->next;
+            }
+        }
+        return head;
+    }
+};
+
+
+//Efficient approach
+//Time Complexity:- O(N)(Single Pass)
+//Space Complexity:- O(1)
 class Solution
 {
     public:
