@@ -32,7 +32,11 @@ class Solution
                 prev->next=nullptr;
             }
             else
+            {
+                Node* temp=t;
                 t=t->next;
+                delete temp;
+            }
         }
         return reverse(dummy->next);
     }
