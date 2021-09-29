@@ -1,5 +1,5 @@
 #include<iostream>
-#include<vector>
+#include<unordered_map>
 #include<utility>
 using namespace std;
 typedef long long ll;
@@ -63,6 +63,8 @@ ll countPair(Node* head, Node* tail, ll key)
     return count;
 }
 
+//Time complexity:- O(N^2)
+//Space complexity:- O(1)
 ll countTriplet(Node* head,ll key)
 {
     ll count=0;
@@ -80,6 +82,34 @@ ll countTriplet(Node* head,ll key)
     return count;
 }
 
+//Time complexity:- O(N^2)
+//Space complexity:- O(N)
+ll countTripletHashing(Node* head,ll key)
+{
+    ll count=0;
+    Node* h=head;
+    unordered_map<ll,Node*> pres;
+    while(h)
+    {
+        pres[h->val]=h;
+        h=h->next;        
+    }
+    for(Node* p=head;p;p=p->next)
+    {
+        for(Node* q=p->next;q;q=q->next)
+        {
+            ll pairSum=p->val+q->val;
+            if(pres.find(key-pairSum)!=pres.end())
+            {
+                if(pres[key-pairSum]!=p && pres[key-pairSum]!=q)
+                    count++;
+            }
+        }
+    }
+    count/=3;
+    return count;
+}
+
 int main()
 {
     Node* head=nullptr;
@@ -92,7 +122,8 @@ int main()
     insert(&head, 2);
     insert(&head, 1);
     show(head);
-    cout<<"Numver of triplets: "<<countTriplet(head,key)<<endl;
+    cout<<"Number of triplets: "<<countTriplet(head,key)<<endl;
+    cout<<"Number of triplets using hashing: "<<countTripletHashing(head,key)<<endl;
 
     return 0;
 }
