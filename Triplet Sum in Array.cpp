@@ -1,24 +1,21 @@
+class Solution{
     public:
-    //Function to find if there exists a triplet in the 
-    //array A[] which sums up to X.
+    bool twoSum(int arr[],int l,int h,int target)
+    {
+        while(l<h)
+        {
+            if(arr[l]==target-arr[h])
+                return true;
+            arr[l]>target-arr[h]?h--:l++;
+        }
+        return false;
+    }
     bool find3Numbers(int A[], int n, int X)
     {
         sort(A,A+n);
         for(int i=0;i<n-2;i++)
-        {
-            int cur=A[i];
-            int l=i+1;
-            int h=n-1;
-            while(l<h)
-            {
-                if(cur+A[l]+A[h]==X)
-                    return true;
-                else if(cur+A[l]+A[h]<X)
-                    l++;
-                else
-                    h--;
-            }
-        }
+            if(twoSum(A,i+1,n-1,X-A[i]))
+                return true;
         return false;
     }
 };
